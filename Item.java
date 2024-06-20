@@ -1,10 +1,10 @@
-
-// Members: Sara Abdelhakeem, Ali Abdulla, Eman Sarah Afi
+/*********************************************************************
+  File: Item.java
+  Written by: Sara Ali, Ali Abdulla, Eman Sarah Afi
+*********************************************************************/
 
 package application;
-
 import java.time.LocalDate;
-
 import javafx.beans.property.SimpleStringProperty;
 
 public class Item
