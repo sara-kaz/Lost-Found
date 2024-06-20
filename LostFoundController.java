@@ -1,5 +1,7 @@
-
-// Members: Sara Abdelhakeem, Ali Abdulla, Eman Sarah Afi
+/*********************************************************************
+  File: LostFoundController.java
+  Written by: Sara Ali, Ali Abdulla, Eman Sarah Afi
+*********************************************************************/
 
 package application;
 
