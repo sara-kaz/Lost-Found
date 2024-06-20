@@ -1,5 +1,6 @@
-
-// Members: Sara Abdelhakeem, Ali Abdulla, Eman Sarah Afi
+/*
+  Written by: Sara Ali, Ali Abdulla, Eman Sarah Afi
+*/
 
 package application;
 
@@ -9,8 +10,6 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
-
-
 
 public class Main extends Application {
 @Override
