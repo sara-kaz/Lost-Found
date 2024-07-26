@@ -128,39 +128,40 @@ public class LostFoundController implements Initializable {
 	@FXML
 	public void addButton(ActionEvent event) {
 		
-		    listView.getSelectionModel().selectLast();
-		    
-		    //Adding New Record
-			tableView.getItems().add(new Item(Location.getValue().toString(),item.getText(),date.getValue(), 
-					                 status.getValue().toString(),descrp.getText(),ID.getText()));
-		    message.setText("A new record is added");
-		    item.clear();
-		    descrp.clear();
-		    ID.clear();
-		    
-	    pieChartData.removeAll(BA,BB,BC,BD,WC,GYM,LB,SC,AU);
-        a=b=c=d=e=f=g=h=j=0;
-    //Pie Chart data
- 	for(int i = 0; i < data.size(); i++) {
- 		if (data.get(i).getLocation().toString() == "Building A") 
- 			a+=1;
- 		else if (data.get(i).getLocation().toString() == "Building B") 
- 			b+=1;
- 		else if (data.get(i).getLocation().toString() == "Building C") 
- 			c+=1;
- 		else if (data.get(i).getLocation().toString() == "Building D") 
- 			d+=1;
- 		else if (data.get(i).getLocation().toString() == "Welcome Center") 
- 			e+=1;
- 		else if (data.get(i).getLocation().toString() == "GYM") 
- 			f+=1;
- 	    else if (data.get(i).getLocation().toString() == "Library") 
- 			g+=1;
- 	   else if (data.get(i).getLocation().toString() == "Student Commons") 
-			h+=1;
- 	   else if (data.get(i).getLocation().toString() == "Auditorium") 
-			j+=1;
- 	}
+		listView.getSelectionModel().selectLast();
+		
+		// Adding New Record
+		tableView.getItems().add(new Item(Location.getValue().toString(),item.getText(),date.getValue(),status.getValue().toString(),descrp.getText(),ID.getText()));
+		message.setText("A new record is added");
+		
+		
+		item.clear();
+		descrp.clear();
+		ID.clear();
+		pieChartData.removeAll(BA,BB,BC,BD,WC,GYM,LB,SC,AU);
+		a=b=c=d=e=f=g=h=j=0;
+       
+		// Pie Chart data
+		for(int i = 0; i < data.size(); i++) {
+			if (data.get(i).getLocation().toString() == "Building A") 
+				a+=1;
+			else if (data.get(i).getLocation().toString() == "Building B") 
+				b+=1;
+			else if (data.get(i).getLocation().toString() == "Building C")
+				c+=1;
+			else if (data.get(i).getLocation().toString() == "Building D") 
+				d+=1;
+			else if (data.get(i).getLocation().toString() == "Welcome Center") 
+				e+=1;
+			else if (data.get(i).getLocation().toString() == "GYM") 
+				f+=1;
+			else if (data.get(i).getLocation().toString() == "Library") 
+				g+=1;
+			else if (data.get(i).getLocation().toString() == "Student Commons") 
+				h+=1;
+			else if (data.get(i).getLocation().toString() == "Auditorium") 
+				j+=1;
+ 	         }
 
 	 	BA = new PieChart.Data("Building A",a);
 	 	BB = new PieChart.Data("Building B",b);
@@ -172,7 +173,7 @@ public class LostFoundController implements Initializable {
 	 	SC = new PieChart.Data("Student Common",h);
 	 	AU = new PieChart.Data("Auditorium",j);
 	 	
-	 	//Event Handler to solve a legend issue
+	 	// Event Handler to solve a legend issue
 	 	if(a > 0)
 	 		pieChartData.add(BA);
 	 	if(b > 0)
@@ -193,19 +194,19 @@ public class LostFoundController implements Initializable {
 	 		pieChartData.add(AU);
  		chart.setData(pieChartData);
 
-		//Constant Pie chart Colors
+		// Constant Pie chart Colors
 		int i = 0;
-		  for (PieChart.Data data : pieChartData) {
-		    data.getNode().setStyle(
-		      "-fx-pie-color: " + pieColors[i % pieColors.length] + ";"
-		    );
-		    i++;
+		for (PieChart.Data data : pieChartData) {
+			data.getNode().setStyle (
+				"-fx-pie-color: " + pieColors[i % pieColors.length] + ";"
+		        );
+		        i++;
 		  }
 		  
 		  chart.setLegendVisible(false);
-		  chart.setLabelLineLength(25);
-		 
+		  chart.setLabelLineLength(25);	 
 	}
+	
 	// Event Listener on Button.onAction
 	@FXML
 	public void exportButton(ActionEvent event) throws IOException {
@@ -213,7 +214,7 @@ public class LostFoundController implements Initializable {
 		FileWriter fileWriter = new FileWriter(file, true);
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 		
-		//Insert Column Headers into file
+		// Insert Column Headers into file
 		if(file.length() == 0)
 		printWriter.println(
 				locationCol.getText() + "," +
@@ -224,7 +225,7 @@ public class LostFoundController implements Initializable {
 				IDCol.getText()
 				);
 
-		//Insert Column data into file
+		// Insert Column data into file
 		for(int i = 0; i < data.size(); i++)
 			printWriter.println(
 				data.get(i).getLocation().toString() + "," +
@@ -236,30 +237,31 @@ public class LostFoundController implements Initializable {
 				);
 		
 		message.setText("Table Data Exported to " + file.getName());
-		//Close
+		// Close
 		printWriter.close();
 	}
 	// Event Listener on DatePicker[#date].onAction
-		@FXML
-		public void dateField(ActionEvent event) {
-			date.getValue();
-		}
+	@FXML
+	public void dateField(ActionEvent event) {
+		date.getValue();
+	}
+	
 	// Event Listener on Button.onAction
 	@FXML
 	public void deleteButton(ActionEvent event){
 		Item selectedItem = tableView.getSelectionModel().getSelectedItem();
 		backup.add(selectedItem);
 		
-		//Solution/Handler for IndexOutOfBoundary if only one record is available and the deleted button is pressed
+		// Solution/Handler for IndexOutOfBoundary if only one record is available and the deleted button is pressed
 		TableViewSelectionModel<Item> x = tableView.getSelectionModel();
 		tableView.setSelectionModel(null);
 		tableView.getItems().remove(selectedItem);
 		tableView.setSelectionModel(x);
-		
-	    descArea.clear();
-	    undo.setDisable(false);
-	    message.setText("The record has been succesfully deleted");
+		descArea.clear();
+	        undo.setDisable(false);
+	        message.setText("The record has been succesfully deleted");
 	}
+	
 	// Event Listener on Button.onAction
 	@FXML
 	public void undoButton(ActionEvent event) {
@@ -269,41 +271,37 @@ public class LostFoundController implements Initializable {
 	}
 	
 	@Override 
-	public void initialize(URL arg0, ResourceBundle arg1) 
-	{
-		//Clock for Label that shows current time
-	    Timeline clock1 = new Timeline(new KeyFrame(Duration.ZERO, z -> 
-	    {        
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// Clock for Label that shows current time
+	        Timeline clock1 = new Timeline(new KeyFrame(Duration.ZERO, z -> {        
 			Calendar calendar = new GregorianCalendar();
 	        currentDate.setText(calendar.getTime().toString());
-	    }),
-	         new KeyFrame(Duration.seconds(1))
-	    );
-	    
-	    //Clock for Label that shows current Table status
-	    Timeline clock2 = new Timeline(new KeyFrame(Duration.ZERO, e -> 
-	    {        
+	        }),
+	        new KeyFrame(Duration.seconds(1))
+	        );
+
+		// Clock for Label that shows current Table status
+	        Timeline clock2 = new Timeline(new KeyFrame(Duration.ZERO, e -> {        
         	message.setText("Ensure all required fields are filled");
-	    }),
-	         new KeyFrame(Duration.seconds(8))
-	    );
+	        }),
+	        new KeyFrame(Duration.seconds(8))
+	        );
 	    
-	    //Set Clocks
+	    // Set Clocks
 	    clock1.setCycleCount(Animation.INDEFINITE);
 	    clock2.setCycleCount(Animation.INDEFINITE);
 	    clock1.play();
 	    clock2.play();
 	    
-	    //ListView Filter
+	    // ListView Filter
 	    listView.getItems().addAll(list);
 	    listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
-			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) throws IndexOutOfBoundsException{
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) throws IndexOutOfBoundsException {
 				
 				descArea.clear();
 				listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-				if(listView.getSelectionModel().getSelectedItem().toString() != "All Locations" && !data.isEmpty())
-				{
+				if(listView.getSelectionModel().getSelectedItem().toString() != "All Locations" && !data.isEmpty() {
 					FilteredList<Item> filteredData = new FilteredList<Item>(data, e -> e.getLocation().toString() == listView.getSelectionModel().getSelectedItem().toString());
 					tableView.setItems(filteredData);
 					
@@ -322,7 +320,7 @@ public class LostFoundController implements Initializable {
 					tableView.setItems(data);
 			}});
 	    
-        //Description Area
+        // Description Area
 	    tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Item>() {
 			@Override
 			public void changed(ObservableValue<? extends Item> arg0, Item arg1, Item arg2) {
@@ -331,14 +329,13 @@ public class LostFoundController implements Initializable {
 						"Date: "+ data.get(tableView.getSelectionModel().getSelectedIndex()).getDate().toString() + "\r\n" +
 						"Status: "+ data.get(tableView.getSelectionModel().getSelectedIndex()).getStatus().toString() + "\r\n" +
 						"Description: "+ data.get(tableView.getSelectionModel().getSelectedIndex()).getDescription().toString());
-				
 			}});
 	    
-	    //Add to Combo Box
+	    // Add to Combo Box
 	    Location.setItems(FXCollections.observableArrayList(locations));
 	    status.setItems(FXCollections.observableArrayList(statusList));
 
-	    //Table Columns
+	    // Table Columns
 	    locationCol.setCellValueFactory(new PropertyValueFactory<Item, String>("Location"));
 	    itemCol.setCellValueFactory(new PropertyValueFactory<Item, String>("Item"));
 	    statusCol.setCellValueFactory(new PropertyValueFactory<Item, String>("Status"));
@@ -347,40 +344,36 @@ public class LostFoundController implements Initializable {
 	    dateCol.setCellValueFactory(new PropertyValueFactory<Item, LocalDate>("Date"));
 	    tableView.setItems(data);
 
-	    //Avoid Selection of future dates
-		date.setDayCellFactory(param -> new DateCell() {
+	    // Avoid Selection of future dates
+	    date.setDayCellFactory(param -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
 	            super.updateItem(date, empty);
 	            setDisable(empty || date.compareTo(LocalDate.now()) > 0 );
 	        }
 	    });
 		
-           //Clock for enabling and disabling buttons
-		    Timeline clock3 = new Timeline(new KeyFrame(Duration.ZERO, z ->
-		    {
-		       //Event handler Add Button disable
-		       if(
-		        		Location.getSelectionModel().isEmpty() == false && 
-		        		item.getText().toString() != "" && 
-		        		date.getValue() != null && 
-		        		status.getSelectionModel().isEmpty() == false && 
-		        		descrp.getText().toString() != ""
-		        		)
-		        	add.setDisable(false);
+           // Clock for enabling and disabling buttons
+		    Timeline clock3 = new Timeline(new KeyFrame(Duration.ZERO, z -> {
+		       // Event handler Add Button disable
+		       if (Location.getSelectionModel().isEmpty() == false && 
+		           item.getText().toString() != "" && 
+		           date.getValue() != null && 
+		           status.getSelectionModel().isEmpty() == false && 
+		           descrp.getText().toString() != "")
+		           add.setDisable(false);
 		        else 
-		        	add.setDisable(true);
+		           add.setDisable(true);
 		       
-		       //Event handler Export Button disable
+		       // Event handler Export Button disable
 		       if(!data.isEmpty())
 		    	   export.setDisable(false);
 		       else
 		    	   export.setDisable(true);
 		       
-		    }), 
+		       }), 
 		    	new KeyFrame(Duration.seconds(1))
-		    );
-	          clock3.setCycleCount(Animation.INDEFINITE);
-              clock3.play();
+		       );
+		clock3.setCycleCount(Animation.INDEFINITE);
+                clock3.play();
 	    }
-
 }
