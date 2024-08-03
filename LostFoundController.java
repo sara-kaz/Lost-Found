@@ -103,7 +103,7 @@ public class LostFoundController implements Initializable {
 	@FXML
 	private Label message;
 	@FXML
-	 String statusList[] = { "Lost", "Found"};
+	String statusList[] = { "Lost", "Found"};
 	String locations[] = { "Building A", "Building B", "Building C", "Building D", "GYM" ,"Auditorium", "Library", "Student Commons", "Welcome Center" };
 	String list[] = { "Building A", "Building B", "Building C", "Building D", "GYM" ,"Auditorium", "Library", "Student Commons", "Welcome Center", "All Locations" };
 	String pieColors [] = {"LIGHTCORAL", "BLUE", "SKYBLUE", "DARKRED", "DARKSLATEBLUE", "RED", "MAROON", "TEAL", "NAVY"};
@@ -113,28 +113,26 @@ public class LostFoundController implements Initializable {
  	ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList();
 
  	int a,b,c,d,e,f,g,h,j;
-    
-	 	PieChart.Data BA = new PieChart.Data("Building A",a);
-	 	PieChart.Data BB = new PieChart.Data("Building B",b);
-	 	PieChart.Data BC = new PieChart.Data("Building C",c);
-	 	PieChart.Data BD = new PieChart.Data("Building D",d);
-	 	PieChart.Data WC = new PieChart.Data("Welcome Center",e);
-	 	PieChart.Data GYM = new PieChart.Data("GYM",f);
-	 	PieChart.Data LB = new PieChart.Data("Library",g);
-	 	PieChart.Data SC = new PieChart.Data("Student Commons",h);
-	 	PieChart.Data AU = new PieChart.Data("Auditorium",j);
+	PieChart.Data BA = new PieChart.Data("Building A",a);
+	PieChart.Data BB = new PieChart.Data("Building B",b);
+	PieChart.Data BC = new PieChart.Data("Building C",c);
+	PieChart.Data BD = new PieChart.Data("Building D",d);
+	PieChart.Data WC = new PieChart.Data("Welcome Center",e);
+	PieChart.Data GYM = new PieChart.Data("GYM",f);
+	PieChart.Data LB = new PieChart.Data("Library",g);
+	PieChart.Data SC = new PieChart.Data("Student Commons",h);
+	PieChart.Data AU = new PieChart.Data("Auditorium",j);
 
 	// Event Listener on Button.onAction
 	@FXML
 	public void addButton(ActionEvent event) {
-		
 		listView.getSelectionModel().selectLast();
 		
 		// Adding New Record
 		tableView.getItems().add(new Item(Location.getValue().toString(),item.getText(),date.getValue(),status.getValue().toString(),descrp.getText(),ID.getText()));
 		message.setText("A new record is added");
 		
-		
+		// Clear Feilds
 		item.clear();
 		descrp.clear();
 		ID.clear();
@@ -240,6 +238,7 @@ public class LostFoundController implements Initializable {
 		// Close
 		printWriter.close();
 	}
+	
 	// Event Listener on DatePicker[#date].onAction
 	@FXML
 	public void dateField(ActionEvent event) {
@@ -286,19 +285,18 @@ public class LostFoundController implements Initializable {
 	        }),
 	        new KeyFrame(Duration.seconds(8))
 	        );
-	    
-	    // Set Clocks
-	    clock1.setCycleCount(Animation.INDEFINITE);
-	    clock2.setCycleCount(Animation.INDEFINITE);
-	    clock1.play();
-	    clock2.play();
-	    
-	    // ListView Filter
-	    listView.getItems().addAll(list);
-	    listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+		
+		// Set Clocks
+		clock1.setCycleCount(Animation.INDEFINITE);
+		clock2.setCycleCount(Animation.INDEFINITE);
+		clock1.play();
+		clock2.play();
+		
+		// ListView Filter
+	        listView.getItems().addAll(list);
+	        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) throws IndexOutOfBoundsException {
-				
 				descArea.clear();
 				listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 				if(listView.getSelectionModel().getSelectedItem().toString() != "All Locations" && !data.isEmpty() {
@@ -320,7 +318,7 @@ public class LostFoundController implements Initializable {
 					tableView.setItems(data);
 			}});
 	    
-        // Description Area
+            // Description Area
 	    tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Item>() {
 			@Override
 			public void changed(ObservableValue<? extends Item> arg0, Item arg1, Item arg2) {
@@ -353,7 +351,7 @@ public class LostFoundController implements Initializable {
 	    });
 		
            // Clock for enabling and disabling buttons
-		    Timeline clock3 = new Timeline(new KeyFrame(Duration.ZERO, z -> {
+	   Timeline clock3 = new Timeline(new KeyFrame(Duration.ZERO, z -> {
 		       // Event handler Add Button disable
 		       if (Location.getSelectionModel().isEmpty() == false && 
 		           item.getText().toString() != "" && 
@@ -373,7 +371,7 @@ public class LostFoundController implements Initializable {
 		       }), 
 		    	new KeyFrame(Duration.seconds(1))
 		       );
-		clock3.setCycleCount(Animation.INDEFINITE);
-                clock3.play();
-	    }
+	   clock3.setCycleCount(Animation.INDEFINITE);
+           clock3.play();
+	}
 }
